@@ -30,7 +30,7 @@
    
     * 수정할 사항들을 타켓팅
     ```
-    git -u
+    git add -u
     git add *
     ```
 
