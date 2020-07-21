@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const path = require('path');
+var bodyParser = require('body-parser');
 
 // 새롭게 등록할 라우터는 아래에 작성하기 바람
 /*
@@ -12,21 +14,28 @@ var router = express.Router();
         router.use('/common',common);
  */
 /* GET home page. */
-// 관리자 모델
-var common = require('./common/admin/admin')
-router.use('/admin',common);
 
-// 로그인 모델
-var login = require('./common/login/login')
-router.use('/login',login);
+//admin 화면
+router.get('/admin', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '/admin/admin.html'));
+});
+  
 
-// 회원가입 모델
-var join = require('./common/join/join')
-router.use('/join',join);
+//login 화면
+router.get('/login', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '/login/login.html'));
+});
+  
 
-// 대시보드 모델
-var dashboard = require('./common/dashboard/dashboard')
-router.use('/dashboard',dashboard);
+//회원가입 화면
+router.get('/join', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '/join/join.html'));
+});
+  
 
-
+//dashboard 화면
+router.get('/dashboard', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '/dashboard/dashboard.html'));
+});
+  
 module.exports = router;
