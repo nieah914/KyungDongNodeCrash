@@ -4,8 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var commonRouter = require('./routes/routesController');
-var viewRouter = require('./views/viewController');
+var commonRouter = require('./routes/common/router');
 var app = express();
 
 // view engine setup
@@ -20,9 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //common의 모델 들을 등록
 app.use('/', commonRouter);
-
-//view의 라우터들을 등록
-app.use('/', viewRouter);
 
 
 

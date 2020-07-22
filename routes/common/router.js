@@ -4,21 +4,30 @@ var path = require('path');
 var fs = require('fs');
 path.join(__dirname, 'views')
 
-fs.readdir(__dirname, (err, file_list) => { 
-   // console.log(file_list);
-   for(let i = 0 ; i < file_list.length - 1; i++) {
-         fs.readdir(path.join(__dirname,file_list[i]), (err, file_list2) => { 
-            for(let j = 0 ; j < file_list2.length; j++) {
-               console.log(path.join(file_list[i],file_list2[j]));
-               let module_path = path.join(file_list[i],file_list2[j])
-               var common = require('./' + module_path)
-               router.use('/'+ file_list2[j],common);
+let currentFolderName = __dirname.split("\\").pop()
+let ParentPath = path.join(__dirname,'..')
+
+fs.readdir(ParentPath, (err, folder_list) => { 
+   for(let i = 0 ; i < folder_list.length; i++) {
+      // router.js 는 라우팅 등록에서 제외
+      if(folder_list[i] == currentFolderName) {
+         //pass
+      }
+      // routes 폴더내의 각 모듈들을 라우팅 등록
+      else {
+         let targetFolerPath = path.join(ParentPath,folder_list[i]);
+         fs.readdir(targetFolerPath, (err, file_list) => { 
+            for(let j = 0 ; j < file_list.length; j++) {
+               let targetFilePath = path.join(folder_list[i],file_list[j]);
+               let module_path = path.join(targetFilePath);
+               var common = require('../' + module_path);
+               console.log('../'+ file_list[j]);
+               router.use('../'+ file_list[j],common);
             }
-            }
-         );
+         });
       }
    }
-);
+});
 // console.log(test);
 // console.log(__dirname);
 // 새롭게 등록할 라우터는 아래에 작성하기 바람
