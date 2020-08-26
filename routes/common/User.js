@@ -7,18 +7,17 @@ db.on("error", console.error);
 
 db.once("open", function() {
     console.log("Connected to mongod server");
-    
-  });
+ });
 
 
 mongoose.connect('mongodb://192.168.35.160:27017/KD');
 
 
-    var studentSchema = mongoose.Schema({
-        name : 'string',
-        address : 'string',
-        age : 'number'
+    var UserInformSchema = mongoose.Schema({
+        id : 'string',
+        passwd : 'string',
+        name : 'string'
     });
 
-module.exports = mongoose.model('student',studentSchema)
+module.exports = mongoose.model('TB_UserInform',UserInformSchema)
 // TB_UserInform

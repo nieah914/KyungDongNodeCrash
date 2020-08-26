@@ -17,8 +17,8 @@
 		<div id="app" class="container">
     </div> <!-- /container -->
 
-		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-		<script type="text/babel">
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
       /**
         리액트는 기본적으로 jsx 문법을 사용
         1. ReactDOM.render를 통해 페이지 내에 라우팅 사용
@@ -30,29 +30,72 @@
       var Route = window.ReactRouter.Route;
       var hashHistory = window.ReactRouter.hashHistory;
       var Link = window.ReactRouter.Link;
-
+      
       class Signin extends React.Component {
           constructor(props) {
             super(props);
+            this.state = {userid : '', userpw: ''};
+            this.idChange = this.idChange.bind(this);
+            this.pwChange = this.pwChange.bind(this);
           }
+          
+            onSubmit(){
+            let userInfo={
+              'user_id':this.state.userid,
+              'user_pw':this.state.userpw
+            };
+
+            fetch('/login',{
+              method: 'POST',
+              headers:{
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(userInfo)
+            }).then((response)=> response.json())
+              .then((responseData)=>{
+                if(responseData.loginresult){
+                  this.props.onSuccess(this.state.requseriduestID);
+                }
+                else{
+                  msg.show(`일치하는 ID와 PW가 없습니다.`
+                  , {
+                  time: 2000,
+                  type: 'error'
+                });
+                this.setState({
+                  userid:'',
+                  userpw:''
+                });
+                }
+              });
+          }
+  
+          idChange(e){
+            this.setState({userid : e.target.value});
+          }
+
+          pwChange(e){
+            this.setState({userpw : e.target.value});
+          }
+
           render() {
             return (
               <div>
                 <form className="form-signin">
-                  <h2 className="form-signin-heading center">테스트 로그인 화면</h2>
-                  <label for="inputEmail" className="sr-only">Email address</label>
-                  <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus />
+                  <h2 className="form-signin-heading center">LOGIN PAGE</h2>
+                  <label for="inputEmail" className="sr-only">ID</label>
+                  <input type="email" name="inputId" className="form-control" placeholder="id" value={this.state.userid} onChange = {this.idChange} required autofocus />
                   <label for="inputPassword" className="sr-only">Password</label>
-                  <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
+                  <input type="password" name="inputPass" className="form-control" placeholder="password" value={this.state.userpw} onChange = {this.pwChange} required />
 
-                  <button className="btn btn-lg btn-primary btn-block" onClick={this.signIn} type="button">Sign in</button>
+                  <button className="btn btn-lg btn-primary btn-block" onClick={this.onSubmit.bind(this)} type="button">Sign in</button>
                 </form>
                 <div className="center">
                   <Link to="/">
                     <button className="btn btn-lg btn-danger" type="button">Sign in</button>
                   </Link>
                   <Link to="/sign">
-                    <button className="btn btn-lg btn-warnning" type="button">Sign in2</button>
+                    <button className="btn btn-lg btn-warnning" type="button"> Sign in2</button>
                   </Link>
                 </div>
                 <div className="center">
@@ -63,6 +106,17 @@
             )
           }
       }
+      
+      // function checkLogin(id, pw){
+      //       var Users = require('../common/User')
+
+      //       router.get('/selectID', (req, res) => {
+      //         Users.find({"id":id, "pw":pw}, (err, users) => {
+      //         if(err) return res.status(500).send({error: 'database failure'});
+      //         res.json(users);
+      //         })
+      //       });
+      // }
 
       class Signin2 extends React.Component {
           constructor(props) {
