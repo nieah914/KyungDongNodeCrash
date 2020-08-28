@@ -11,7 +11,8 @@
 		<script src="https://fb.me/react-15.1.0.js"></script>
     <script src="https://fb.me/react-dom-15.1.0.js"></script>
     <script src="https://npmcdn.com/react-router@3.0.2/umd/ReactRouter.min.js"></script>
-		<script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	</head>
 	<body>
 		<div id="app" class="container">
@@ -34,47 +35,30 @@
       class Signin extends React.Component {
           constructor(props) {
             super(props);
-            this.state = {userid : '', userpw: ''};
+            this.state = {userid : '', userpw: ''};   // state 내장 객체를 형성
+            this.signIn = this.signIn.bind(this);  // 각 함수들을 bind하여 내장 객체의 필드에 값을 채움. 
             this.idChange = this.idChange.bind(this);
             this.pwChange = this.pwChange.bind(this);
           }
-          
-            onSubmit(){
-            let userInfo={
-              'user_id':this.state.userid,
-              'user_pw':this.state.userpw
-            };
-
-            fetch('/login',{
-              method: 'POST',
-              headers:{
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(userInfo)
-            }).then((response)=> response.json())
-              .then((responseData)=>{
-                if(responseData.loginresult){
-                  this.props.onSuccess(this.state.requseriduestID);
-                }
-                else{
-                  msg.show(`일치하는 ID와 PW가 없습니다.`
-                  , {
-                  time: 2000,
-                  type: 'error'
-                });
-                this.setState({
-                  userid:'',
-                  userpw:''
-                });
-                }
-              });
-          }
+         
+          signIn(){ //로그인 했을 때 login.js의 selectID 구문으로 라우팅)
+          axios.post('/login/selectID', {
+            id : this.state.userid, // 내장 객체의 userid를 파라미터로 전송
+            pw : this.state.userpw  // 내장 객체의 userpw를 파라미터로 전송
+          })
+          .then(function (response){  // 값이 있으면 success 알림
+            alert('success');
+          })
+          .catch(function (error){ // 값이 없거나 에러면 fail 알림
+            alert('not user');
+          });
+        }
   
-          idChange(e){
+          idChange(e){  // idChange 함수가 실행되면 내장 객체의 userid에 타겟의 값을 할당
             this.setState({userid : e.target.value});
           }
 
-          pwChange(e){
+          pwChange(e){  // pwChange 함수가 실행되면 내장 객체의 userpw에 타겟의 값을 할당
             this.setState({userpw : e.target.value});
           }
 
@@ -84,11 +68,11 @@
                 <form className="form-signin">
                   <h2 className="form-signin-heading center">LOGIN PAGE</h2>
                   <label for="inputEmail" className="sr-only">ID</label>
-                  <input type="email" name="inputId" className="form-control" placeholder="id" value={this.state.userid} onChange = {this.idChange} required autofocus />
+                  <input type="email" id = "inputEmail" name="inputId" className="form-control" placeholder="id" onChange = {this.idChange} required autofocus /> 
                   <label for="inputPassword" className="sr-only">Password</label>
-                  <input type="password" name="inputPass" className="form-control" placeholder="password" value={this.state.userpw} onChange = {this.pwChange} required />
+                  <input type="password" id = "inputPassword" name="inputPass" className="form-control" placeholder="password" onChange = {this.pwChange} required />
 
-                  <button className="btn btn-lg btn-primary btn-block" onClick={this.onSubmit.bind(this)} type="button">Sign in</button>
+                  <button className="btn btn-lg btn-primary btn-block" onClick={this.signIn} type="button">Sign in</button>
                 </form>
                 <div className="center">
                   <Link to="/">
@@ -155,6 +139,7 @@
           <Router history={hashHistory}>
               <Route component={Signin} path="/"></Route>
               <Route component={Signin2} path="/sign"></Route>
+
           </Router>,
       document.getElementById('app'));
 

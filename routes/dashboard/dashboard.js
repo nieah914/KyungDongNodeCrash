@@ -21,16 +21,16 @@ var vName = "Hong gil dong";
 var vAddress = "서울시 강남구 논현동";
 var vAge = "22";
 
-var vName2 = "TEST";
-var vAddress2 = "서울시 강남구 논현동";
-var vAge2 = "25";
+var vId = "test";
+var vPw = "1234";
+var vName = "test";
 
 router.post('/function', function(req, res, next) {
     console.log('여기를 호출했습니다.')
     var studentModel = new Users();
-    studentModel.name = vName2;
-    studentModel.address = vAddress2;
-    studentModel.age = vAge2;
+    studentModel.id = vId;
+    studentModel.passwd = vPw;
+    studentModel.name = vName;
     studentModel.save()
     .then(newPost => {
       console.log("Create 완료");
