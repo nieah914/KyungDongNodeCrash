@@ -7,10 +7,21 @@
 	<head>
     <!-- 공통css 불러올 경우 아래와 같이 사용(css 위치는 public내부에 있음) -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/common.css">
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	</head>
+=======
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://fb.me/react-15.1.0.js"></script>
+    <script src="https://fb.me/react-dom-15.1.0.js"></script>
+    <script src="https://npmcdn.com/react-router@3.0.2/umd/ReactRouter.min.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+>>>>>>> 9f935623daec3b3f7989061eed52af238e2e9364
 	<body>
 
+<<<<<<< HEAD
     </div>
     <div>
       <form className="form-signin">
@@ -37,10 +48,123 @@
 	</body>
 </html>
 <script>
+=======
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      /**
+        리액트는 기본적으로 jsx 문법을 사용
+        1. ReactDOM.render를 통해 페이지 내에 라우팅 사용
+           - 각 라우팅의 경우 선언된 클래스를 불러옴(component 상속)
+        2. 하나의 페이지지만 여러페이지를 한곳에서 구현 가능
+        3. Link의 경우 내부 페이지 이동에서 사용하고 다른페이지 연결시에는 html a 태그와 같은 기능 사용
+      */
+      var Router = window.ReactRouter.Router;
+      var Route = window.ReactRouter.Route;
+      var hashHistory = window.ReactRouter.hashHistory;
+      var Link = window.ReactRouter.Link;
+      
+      class Signin extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = {userid : '', userpw: ''};   // state 내장 객체를 형성
+            this.signIn = this.signIn.bind(this);  // 각 함수들을 bind하여 내장 객체의 필드에 값을 채움. 
+            this.idChange = this.idChange.bind(this);
+            this.pwChange = this.pwChange.bind(this);
+          }
+         
+          signIn(){ //로그인 했을 때 login.js의 selectID 구문으로 라우팅)
+          axios.post('/login/selectID', {
+            id : this.state.userid, // 내장 객체의 userid를 파라미터로 전송
+            pw : this.state.userpw  // 내장 객체의 userpw를 파라미터로 전송
+          })
+          .then(function (response){  // 값이 있으면 success 알림
+            alert('success');
+          })
+          .catch(function (error){ // 값이 없거나 에러면 fail 알림
+            alert('not user');
+          });
+        }
+  
+          idChange(e){  // idChange 함수가 실행되면 내장 객체의 userid에 타겟의 값을 할당
+            this.setState({userid : e.target.value});
+          }
+
+          pwChange(e){  // pwChange 함수가 실행되면 내장 객체의 userpw에 타겟의 값을 할당
+            this.setState({userpw : e.target.value});
+          }
+
+          render() {
+            return (
+              <div>
+                <form className="form-signin">
+                  <h2 className="form-signin-heading center">LOGIN PAGE</h2>
+                  <label for="inputEmail" className="sr-only">ID</label>
+                  <input type="email" id = "inputEmail" name="inputId" className="form-control" placeholder="id" onChange = {this.idChange} required autofocus /> 
+                  <label for="inputPassword" className="sr-only">Password</label>
+                  <input type="password" id = "inputPassword" name="inputPass" className="form-control" placeholder="password" onChange = {this.pwChange} required />
+
+                  <button className="btn btn-lg btn-primary btn-block" onClick={this.signIn} type="button">Sign in</button>
+                </form>
+                <div className="center">
+                  <Link to="/">
+                    <button className="btn btn-lg btn-danger" type="button">Sign in</button>
+                  </Link>
+                  <Link to="/sign">
+                    <button className="btn btn-lg btn-warnning" type="button"> Sign in2</button>
+                  </Link>
+                </div>
+                <div className="center">
+                  <a href="/admin">관리자 페이지로 이동</a>
+                </div>
+              </div>
+
+            )
+          }
+      }
+      
+      // function checkLogin(id, pw){
+      //       var Users = require('../common/User')
+
+      //       router.get('/selectID', (req, res) => {
+      //         Users.find({"id":id, "pw":pw}, (err, users) => {
+      //         if(err) return res.status(500).send({error: 'database failure'});
+      //         res.json(users);
+      //         })
+      //       });
+      // }
+
+      class Signin2 extends React.Component {
+          constructor(props) {
+            super(props);
+          }
+          render() {
+            return (
+              <div>
+                <form className="form-signin">
+                  <h2 className="form-signin-heading">전환화면</h2>
+                  <label for="inputEmail" className="sr-only">Email address</label>
+                  <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus />
+                  <label for="inputPassword" className="sr-only">Password</label>
+                  <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
+>>>>>>> 9f935623daec3b3f7989061eed52af238e2e9364
 
   function test() {
     alert("here you are");
   }
 
+<<<<<<< HEAD
+=======
+            )
+          }
+      }
+      //리액트 라우팅 처리
+      ReactDOM.render(
+          <Router history={hashHistory}>
+              <Route component={Signin} path="/"></Route>
+              <Route component={Signin2} path="/sign"></Route>
+
+          </Router>,
+      document.getElementById('app'));
+>>>>>>> 9f935623daec3b3f7989061eed52af238e2e9364
 
 </script>

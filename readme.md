@@ -5,7 +5,9 @@
     ```
     git pull origin master
     ```
-
+## 2020-09-08 업데이트
+### MongoDb인 Mongoose 의 insert select 부분들에 대한 테스트예제 포함
+* 테스트를 진행해보기 위해서는 routers.js에서 // DB ConnectionTest 이부분을 확인해 보면된다.
 
 ## 2020-07-29 업데이트
 ### 프로젝트 백엔드 기본 특 작성 완료
