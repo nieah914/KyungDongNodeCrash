@@ -19,6 +19,13 @@ router.use('/dashboard',dashboard);
 var admin = require(path.join(routerPath,'/admin/admin'))
 router.use('/admin',admin);
 
+
+// DB ConnectionTest
+var test = require(path.join(routerPath,'test/test'))
+router.use('/test',test);
+
+
+
 // fs.readdir(routerPath, (err, folder_list) => { 
 //    // console.log('routerPath = ' + routerPath)
 //    for(let i = 0 ; i < folder_list.length; i++) {

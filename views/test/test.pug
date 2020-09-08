@@ -1,0 +1,20 @@
+doctype html
+script.
+    
+html
+    head
+        title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+
+        br                
+        table
+            tr
+                th 아이디
+                th 패스워드
+                th 이름
+            -for (var i = 0 ; i < data.length ; i ++)
+                tr
+                    td #{data[i].id}
+                    td #{data[i].passwd}
+                    td #{data[i].name}                    

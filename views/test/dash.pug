@@ -1,0 +1,77 @@
+doctype html
+
+script(src="//code.jquery.com/jquery-1.11.0.min.js")
+script(type="text/javascript").
+    function btnClicked() {
+        $("#t_temp").empty();
+        let id = document.getElementById('id').value;
+
+        var html = '';
+
+        $.ajax({
+            url: id =='' ? "/test/selectAll" : "/test/select",
+            type: "GET",
+            cache: false,
+            dataType: "json",
+            data: "id=" + id,
+            success: function(data){
+                for(let i = 0 ;i < data.length ; i++) {
+                    html+='<tr>';
+                    html += '<td>'+data[i].id+'</td>';
+                    html += '<td>'+data[i].temp+'</td>';
+                    html += '<td>'+data[i].date+'</td>';    
+                }
+                $("#t_temp").append(html);
+                
+            },
+            error: function (request, status, error){        
+            }
+        });
+    }
+
+    function tableCreate(){
+
+        
+        var html = '';
+                
+        tc.push({name : '남궁민수', job : '기관사', age : 50,hobby : '노래듣기' }); 
+        tc.push({name : '유재석', job : 'MC', age : 40,hobby : '운동' }); 
+
+
+        for(key in tc){
+            html += '<tr>';
+            html += '<td>'+tc[key].name+'</td>';
+            html += '<td>'+tc[key].job+'</td>';
+            html += '<td>'+tc[key].age+'</td>';
+            html += '<td>'+tc[key].hobby+'</td>';
+            html += '</tr>';
+        }
+                    
+        $("#t_temp").empty();
+        $("#t_temp").append(html);
+                    
+    }
+    
+html
+    head
+        title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+
+    
+
+    body
+        form
+            input(type="text", id="id", placeholder="아이디를 기입해주세요")
+        button(onclick="btnClicked()") 테스트
+
+        br                
+        table(id="t_temp")
+            tr
+                th 계정
+                th 온도
+                th 이름
+            -for (var i = 0 ; i < data.length ; i ++)
+                tr
+                    td #{data[i].id}
+                    td #{data[i].temp}
+                    td #{data[i].date}                    
