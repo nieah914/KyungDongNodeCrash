@@ -5,6 +5,11 @@
     ```
     git pull origin master
     ```
+
+## 2020-09-09 업데이트
+### localhost:3000/test/insert 를 통해서 온도 측정시 데이터 기입 가능
+
+
 ## 2020-09-08 업데이트
 ### MongoDb인 Mongoose 의 insert select 부분들에 대한 테스트예제 포함
 * 테스트를 진행해보기 위해서는 routers.js에서 // DB ConnectionTest 이부분을 확인해 보면된다.

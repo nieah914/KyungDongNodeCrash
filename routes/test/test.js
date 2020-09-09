@@ -38,6 +38,32 @@ router.get('/selectAll', (req, res) => {
 
 
 
+// http://localhost:3000/test/insert
+// 에서 온도 측정시
+router.get('/insert', (req, res) => {
+  let param = req.query;
+  var obejct = new checkTemperature();
+  obejct.id = param.id;
+  obejct.temp = param.temp;
+  obejct.save()
+  .then(newPost => {
+    console.log("Create 완료");
+    res.status(200).json({
+      message: "Create success"
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: err
+    });
+  });
+});
+
+
+
+
+
+
 
 
 
