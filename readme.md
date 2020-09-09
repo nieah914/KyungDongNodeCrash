@@ -7,8 +7,15 @@
     ```
 
 ## 2020-09-09 업데이트
-### localhost:3000/test/insert 를 통해서 온도 측정시 데이터 기입 가능
-
+### localhost:3000/test/insert 를 통해서 온도 측정시 데이터
+* http://localhost:3000/test/insert?id=nieah914&temp=10 //온도 측정시 보내는 api
+* http://localhost:3000/test/get_all_temp_history //온도 측정정보 확인 링크
+* 태그를 찍었을때 해당 태그의 번호로 사용자 정보를 조회하는 api 등록함.
+   - test.js를 확인해보면
+   - /insert/usr_info
+   - /select/usr_info 
+   에 대한 api를 만들어 놓은 사용법은 test.js를 들어가면 나옴.
+   
 
 ## 2020-09-08 업데이트
 ### MongoDb인 Mongoose 의 insert select 부분들에 대한 테스트예제 포함

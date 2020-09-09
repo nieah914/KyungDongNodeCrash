@@ -14,7 +14,7 @@ db.once("open", function() {
 mongoose.connect('mongodb://192.168.35.160:27017/KD');
 
 var tb_daily_user_temps = mongoose.Schema({
-    id : 'string',
+    id : 'string', // 이거사실 uuid 임
     temp : 'string',
     date : {type: Date, default: Date.now}
 });

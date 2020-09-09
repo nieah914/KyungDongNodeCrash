@@ -3,6 +3,7 @@ var router = express.Router();
 var Users = require('../common/User')
 
 var checkTemperature = require('../common/checkTemperature');
+var userMatching = require('../common/userMatching');
 
 // http://localhost:3000/test/get_all_temp_history
 router.get('/get_all_temp_history', (req, res) => {
@@ -61,9 +62,41 @@ router.get('/insert', (req, res) => {
 
 
 
+// http://localhost:3000/test/insert/usr_info
+// 사용 ex) http://localhost:3000/test/insert/usr_info?uuid=AB CD EF&user_id=10160565&user_nm=정해인 
+// 사용자 정보 기입시
+router.get('/insert/usr_info', (req, res) => {
+  let param = req.query;
+  var obejct = new userMatching();
+  obejct.uuid = param.uuid;
+  obejct.user_id = param.user_id;
+  obejct.user_nm = param.user_nm;
+  obejct.save()
+  .then(newPost => {
+    console.log("Create 완료");
+    res.status(200).json({
+      message: "Create success"
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: err
+    });
+  });
+});
 
 
-
+// http://localhost:3000/test/select/usr_info
+// 사용 ex) http://localhost:3000/test/select/usr_info?uuid=AB CD EF
+// 현재 user_id가 10160565는 RFID 태그 코드가 AB CD EF 이다.
+router.get('/select/usr_info', (req, res) => {
+  let param = req.query;
+  let returnParam = {}
+  userMatching.find( {"uuid":param.uuid}, (err, users) => {
+      if(err) return res.status(500).send({error: 'database failure'});
+      res.json(users);
+  })
+});
 
 
 
