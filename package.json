@@ -40,7 +40,7 @@
     "tui-date-picker": "^4.0.2",
     "tui-grid": "^4.9.1",
     "tui-pagination": "^3.3.3",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.0"
